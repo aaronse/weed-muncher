@@ -1,0 +1,1 @@
+Semi-automated Weed Puller intended to be used for situations where GramPa's Weeder (and similar) are unable to grip.

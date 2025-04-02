@@ -1,0 +1,45 @@
+Create CAD design for a gardening tool to grip and pull up small weeds.  Tool will be used by humans standing up.
+- Use Fusion360 Python scripts (running on Windows PC).
+- Gardening tool will be mostly 3D printed with CNC milled parts.
+- Tool needs to be able to grip and pull up small weeds like freshly sprouted maple tree seeds growing in the grass and mulch.  Should be able to pull up similar weeds that are too small for "GramPa's Weeder" to grip and pull out.
+- Tool assembly will use 48" length, 1/2" EMT conduit and have various 3D Printed/CNC cut parts attached.
+- We will build, learn and iterate, make a fun educational youtube video.  
+- Stretch goal is to sell kits later on that are easy to ship, and assemble.  Customers will buy their own EMT conduit.
+
+- The normal first version will have manual lever near the top to actuate the gripper at the bottom.
+
+- The Pro version:
+  - Includes Raspberry Pi Zero 2W, Camera, and use AI to automate weeding later on by attaching similar mechanism to an autonomous wheeled rover robot.  
+  - Manual weeder behavior is captured and tagged to train our future automated model.  
+
+- Stretch goal is to eventually gamification and wirelessly send video feed to mobile phone attached to top of weeder.  Upload video/image/tagged training data to hosted service/repository.  Game boards and such to motivate and reward participation and help market the product's fun utility value.  
+
+Focus on creating Fusion360 Python scripts to create the overall tool assembly.  We need to make various parts for the assembly including but not limited to:
+- EMT mount
+- Gripper arm
+- TPU finger pad
+- Overall assembly
+
+- To optimize our process of communicating and working together, create Fusion360 scripts/functions that query model state to capture any manual changes I make to .JSON format or something that helps accurately represent my manual edits to help your model understand and reason how to help iterate.  We're trying to build the gardening tool, while also finding an efficient way to work together, so share process improving ideas/advice.  Attached systems-engineering-approach.txt with ideas ChatGPT 4o suggested.
+
+We can use GT2 10mm fiberglass reinforced belts, pulleys, idlers, Nema 17 steppers, Servos, and other components commonly used on 3D printers and mostly 3D printed CNCs.
+
+Making something that resembles amputated thumbs and fingers, or green PETG thumb and finger shaped fingers would be funny.  We can use consumable TPU gripper liners maybe?  Open to non-human inspired optimal pinch and pull mechanisms too.  Worse case we rip weeds apart, ideally we squeezed hard enough that we then use leverage to pull them out of the ground.
+
+GramPa's weeder has a lever that can be used to leverage and pull gripped weeds.  Maybe we use 2 omni wheels for our tool to support weight of the tool, but the wheels can also act as a pivot point to help with levering and pulling up the weeds?  Omni wheels so Users can slide the tool sideways without much effort?
+
+Ensure pinch and pull mechanisms can be 3D printed.  We can use milled plywood, polycarbonate, acrylic or Aluminum too.
+
+We're okay with using GT2 belts for a manual pinch and pull mechanism triggered by a lever attached to an EMT conduit enabling the User to walk around upright while gripping the weeds.
+
+Potentially we use the User's mobile phone to display a close up of the weed being pulled.  Military and other themes for the video feed to add to the silly fun.  Score point noises and such.  Two wheels to support tool weight.  Wheel tachometer to track ground covered.
+
+Are there any existing open source models available that we can use for the gripper, trigger or weed identification, so that we can skip gathering the training data?  Hopefully not, and there's a fun project and potential business opportunity here?
+
+What do you need to get started?
+- Declare constants and magic numbers at beginning of Python scripts.
+- 2" or smaller jaw span.
+- Assume standard 1/2" EMT outer and inner dimensions.
+- Assault rifle inspired lever trigger handle should be ~40" up from bottom end of EMT pipe.  Top extends up, potentially we add a forearm strap to reduce weight load on User's wrist.  Many Users will be old.
+- 3D print and CNC cut as much as possible, minimize bolt hardware.  Use M5x30mm and nylock nuts as much as possible.  
+- Minimize different types of parts needed to keep BOM simple.

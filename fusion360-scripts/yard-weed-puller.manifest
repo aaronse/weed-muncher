@@ -1,0 +1,11 @@
+{
+	"autodeskProduct":	"Fusion",
+	"type":	"script",
+	"author":	"Aza B2C",
+	"description":	{
+		"":	"MOWPs!"
+	},
+	"supportedOS":	"windows|mac",
+	"editEnabled":	true,
+	"iconFilename":	"ScriptIcon.svg"
+}

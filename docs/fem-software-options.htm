@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Source FEA Tools for Flexure Simulation</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 2rem;
+      overflow-x: hidden;
+    }
+    h1 {
+      text-align: center;
+      color: #00ffc3;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #00ffc3; }
+      to { text-shadow: 0 0 20px #00ffc3, 0 0 30px #00ffc3; }
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #1e1e1e;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 2rem;
+      animation: fadeIn 1.5s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    th, td {
+      padding: 1rem;
+      border: 1px solid #333;
+      text-align: center;
+    }
+    th {
+      background-color: #292929;
+      color: #ffd700;
+    }
+    tr:nth-child(even) {
+      background-color: #252525;
+    }
+    a {
+      color: #00aaff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .highlight {
+      background-color: #333a40;
+      font-weight: bold;
+      color: #00ffc3;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Best Open Source FEA Tools for Simulating Flexures & PETG Mechanisms</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Tool</th>
+        <th>Force vs Deflection Sim</th>
+        <th>Nonlinear Support</th>
+        <th>Material Control</th>
+        <th>PETG Modeling</th>
+        <th>Ideal For</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="highlight">
+        <td>CalculiX 🧱</td>
+        <td>✅</td>
+        <td>✅✅✅</td>
+        <td>✅✅✅</td>
+        <td>✅</td>
+        <td>Robust spring & flexure simulation</td>
+        <td>
+          <a href="https://www.calculix.de/" target="_blank">calculix.de</a>
+          <a href="https://github.com/Dhondtguido/CalculiX" target="_blank">github.com/Dhondtguido/CalculiX</a>
+          <a href="https://calculix.discourse.group" target="_blank">calculix.discourse.group</a>
+        </td>
+      </tr>
+      <tr>
+        <td>FEniCS 🐍</td>
+        <td>✅</td>
+        <td>✅✅✅</td>
+        <td>✅✅✅✅</td>
+        <td>✅</td>
+        <td>Programmable nonlinear FEM in Python</td>
+        <td><a href="https://fenicsproject.org/" target="_blank">fenicsproject.org</a></td>
+      </tr>
+      <tr>
+        <td>Elmer FEM ❄️</td>
+        <td>✅</td>
+        <td>✅✅</td>
+        <td>✅✅</td>
+        <td>✅</td>
+        <td>Thermo-mechanical flexure systems</td>
+        <td><a href="https://www.csc.fi/web/elmer" target="_blank">elmer @ csc.fi</a></td>
+      </tr>
+      <tr>
+        <td>Code_Aster 🧪</td>
+        <td>✅</td>
+        <td>✅✅✅</td>
+        <td>✅✅✅✅</td>
+        <td>✅</td>
+        <td>High-fidelity plastic & elastic analysis</td>
+        <td><a href="https://www.code-aster.org/" target="_blank">code-aster.org</a></td>
+      </tr>
+      <tr>
+        <td>Kratos Multiphysics ⚙️</td>
+        <td>✅</td>
+        <td>✅✅</td>
+        <td>✅✅</td>
+        <td>✅</td>
+        <td>Complex robotic and multi-physics sims</td>
+        <td><a href="https://www.kratosmultiphysics.org/" target="_blank">kratosmultiphysics.org</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    // Gratuitous sparkles on highlight row ✨
+    const sparkleRow = document.querySelector('.highlight');
+    sparkleRow.style.position = 'relative';
+    for (let i = 0; i < 20; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.style.position = 'absolute';
+      sparkle.style.width = '5px';
+      sparkle.style.height = '5px';
+      sparkle.style.borderRadius = '50%';
+      sparkle.style.background = '#ffd700';
+      sparkle.style.top = `${Math.random() * 100}%`;
+      sparkle.style.left = `${Math.random() * 100}%`;
+      sparkle.style.animation = `twinkle ${1 + Math.random()}s infinite ease-in-out`;
+      sparkleRow.appendChild(sparkle);
+    }
+    const style = document.createElement('style');
+    style.innerHTML = `@keyframes twinkle {
+      0% { opacity: 0.2; transform: scale(0.5); }
+      50% { opacity: 1; transform: scale(1.2); }
+      100% { opacity: 0.2; transform: scale(0.5); }
+    }`;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
