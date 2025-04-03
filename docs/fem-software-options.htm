@@ -1,3 +1,13 @@
+<!-- 
+ https://chatgpt.com/c/67ec7215-6aa0-800b-b3f0-4871d712e58c 
+ -->
+<!--
+<a href="https://www.calculix.de/" target="_blank">calculix.de</a>
+<a href="https://github.com/Dhondtguido/CalculiX" target="_blank">github.com/Dhondtguido/CalculiX</a>
+<a href="https://calculix.discourse.group" target="_blank">calculix.discourse.group</a>
+
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,6 +70,36 @@
       background-color: #333a40;
       font-weight: bold;
       color: #00ffc3;
+      position: relative;
+      cursor: pointer;
+    }
+    .confetti, .firework {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .confetti span, .firework span {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #ffd700;
+      border-radius: 50%;
+      animation: burst 0.8s ease-out forwards;
+    }
+    @keyframes burst {
+      to {
+        transform: translate3d(
+          calc(100px - 200px * random()),
+          calc(100px - 200px * random()),
+          0
+        );
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -86,11 +126,7 @@
         <td>✅✅✅</td>
         <td>✅</td>
         <td>Robust spring & flexure simulation</td>
-        <td>
-          <a href="https://www.calculix.de/" target="_blank">calculix.de</a>
-          <a href="https://github.com/Dhondtguido/CalculiX" target="_blank">github.com/Dhondtguido/CalculiX</a>
-          <a href="https://calculix.discourse.group" target="_blank">calculix.discourse.group</a>
-        </td>
+        <td><a href="http://www.calculix.de/" target="_blank">calculix.de</a></td>
       </tr>
       <tr>
         <td>FEniCS 🐍</td>
@@ -132,28 +168,23 @@
   </table>
 
   <script>
-    // Gratuitous sparkles on highlight row ✨
-    const sparkleRow = document.querySelector('.highlight');
-    sparkleRow.style.position = 'relative';
-    for (let i = 0; i < 20; i++) {
-      const sparkle = document.createElement('div');
-      sparkle.style.position = 'absolute';
-      sparkle.style.width = '5px';
-      sparkle.style.height = '5px';
-      sparkle.style.borderRadius = '50%';
-      sparkle.style.background = '#ffd700';
-      sparkle.style.top = `${Math.random() * 100}%`;
-      sparkle.style.left = `${Math.random() * 100}%`;
-      sparkle.style.animation = `twinkle ${1 + Math.random()}s infinite ease-in-out`;
-      sparkleRow.appendChild(sparkle);
+    function createEffect(type, container) {
+      const wrapper = document.createElement('div');
+      wrapper.className = type;
+      for (let i = 0; i < 25; i++) {
+        const dot = document.createElement('span');
+        dot.style.left = Math.random() * 100 + '%';
+        dot.style.top = Math.random() * 100 + '%';
+        wrapper.appendChild(dot);
+      }
+      container.appendChild(wrapper);
+      setTimeout(() => wrapper.remove(), 1000);
     }
-    const style = document.createElement('style');
-    style.innerHTML = `@keyframes twinkle {
-      0% { opacity: 0.2; transform: scale(0.5); }
-      50% { opacity: 1; transform: scale(1.2); }
-      100% { opacity: 0.2; transform: scale(0.5); }
-    }`;
-    document.head.appendChild(style);
+
+    document.querySelector('.highlight').addEventListener('click', () => {
+      const type = Math.random() < 0.5 ? 'confetti' : 'firework';
+      createEffect(type, document.querySelector('.highlight'));
+    });
   </script>
 </body>
 </html>
