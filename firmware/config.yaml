@@ -57,7 +57,7 @@ axes:
       feed_scaler: 1.100000
 
     motor0: 
-      limit_neg_pin: gpio.25
+      limit_neg_pin: NO_PIN
       limit_pos_pin: NO_PIN
       limit_all_pin: NO_PIN
       hard_limits: false
@@ -101,7 +101,7 @@ axes:
       feed_scaler: 1.100000
 
     motor0: 
-      limit_neg_pin: gpio.33
+      limit_neg_pin: NO_PIN
       limit_pos_pin: NO_PIN
       limit_all_pin: NO_PIN
       hard_limits: false
@@ -128,7 +128,7 @@ axes:
         toff_coolstep: 3
 
     motor1: 
-      limit_neg_pin: gpio.35
+      limit_neg_pin: NO_PIN
       limit_pos_pin: NO_PIN
       limit_all_pin: NO_PIN
       hard_limits: false
@@ -173,7 +173,7 @@ axes:
 
     motor0: 
       limit_neg_pin: NO_PIN
-      limit_pos_pin: gpio.32
+      limit_pos_pin: NO_PIN
       limit_all_pin: NO_PIN
       hard_limits: false
       pulloff_mm: 4.000000
@@ -200,7 +200,7 @@ axes:
 
     motor1: 
       limit_neg_pin: NO_PIN
-      limit_pos_pin: gpio.34
+      limit_pos_pin: NO_PIN
       limit_all_pin: NO_PIN
       hard_limits: false
       pulloff_mm: 4.000000
@@ -232,8 +232,8 @@ control:
   cycle_start_pin: NO_PIN
   macro0_pin: NO_PIN
   macro1_pin: NO_PIN
-  macro2_pin: gpio.14:low
-  macro3_pin: gpio.13:low
+  macro2_pin: gpio.14:low:pu
+  macro3_pin: gpio.13:low:pu
   fault_pin: NO_PIN
   estop_pin: NO_PIN
 
@@ -254,17 +254,18 @@ macros:
   startup_line1: 
   Macro0: G0 Y100
   Macro1: G0 Y200 
-  Macro2: $LocalFS/Run=grind_normal.nc
-  Macro3: $LocalFS/Run=grind_turbo.nc
+  Macro2: G91&G1 Y100 F10000&G90&G4 P0&M2 
+  Macro3: G91&G1 Y25 F1000&G90&G4 P0&M2
   after_homing: 
   after_reset: 
   after_unlock: 
-
+#  Macro2: $LocalFS/Run=grind_normal.nc
+#  Macro3: $LocalFS/Run=grind_turbo.nc
 
 start: 
   must_home: false
   deactivate_parking: false
-  check_limits: true
+  check_limits: false      # disable the pre-flight limit switch check
 
 parking: 
   enable: false
