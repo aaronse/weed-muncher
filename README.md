@@ -163,15 +163,19 @@ For example, I have a ton of unwanted Maple tree weedlings.
 
 ## 📄 License
 
-⚠️ This project is for **personal, non-commercial use only**.
+⚠️ This project is for **personal, non-commercial use only**, and is licensed under the [Creative Commons BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) license.
 
-🚫 You may not sell, manufacture, or commercially distribute this project or any derivative works.
+You are free to:
+- ✅ Use it
+- ✅ Remix it
+- ✅ Build your own version at home
 
-😏 *Wanna sell it anyway?*  
-Get in touch — am open to licensing deals to help pay for my kids' college fees...
-Contact us at: https://github.com/aaronse/weed-puller/issues
+As long as you:
+- ❌ Don't sell it or make money from it
+- ✅ Give credit
+- ✅ Share under the same license
 
-This project is licensed under the [Creative Commons BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) license.
+😏 *Interested in selling parts or kits?*  
+Am open to commercial licensing.  Any help paying for my kids' college fees is appreciated, cheers!  Contact via https://github.com/aaronse/weed-puller/issues
 
-You are free to use and remix for **personal, non-commercial use**.  
 **Commercial use or resale of any parts, models, or derivatives is strictly prohibited.**
