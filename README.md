@@ -1,3 +1,87 @@
+# Project: Pet Sapling Savior, or, Pet Weed Euthanizer?
+
+## Description
+An Arduino‐powered, Mostly 3D‐printed weeder that grips unwanted plants, gently uproots them, and deposits sapling-worthy seedlings into your chosen grow tray—combining garden cleanup, and with mini reforestation.
+
+### WHY?
+- I hate weeding, and avoid chemicals, plus I'd like to relocate otherwise unwanted saplings to areas needing reforesting, or, yards of people that like/deserve weeds 😉.  
+- I want AI machines to do my bidding, before they make me do theirs.
+ 
+### WHAT's SPECIAL?
+- Fast cordless yard fun way to relocate pet saplings, or, euthanize pet weeds.  
+- Design includes many components that can be repurposed for other DIY tools.
+- Today's [Best selling Weeders](https://www.amazon.com/gp/bestsellers/lawn-garden/553934) are either designed for large deep rooted weeds.  They don't help with small weeds.  So today, people need to bend down, or kneel down, to grip and pull out small weeds.  
+- Cutting/trimming weeds is fast for a day...  But, requires multiple cuts over long periods to eventually exhaust weeds.
+- FluidNC controller boards doesn't require code, just upload config via WebUI, and go relocating/hunting...
+
+## Functions
+- Grip, pull and discard, or, collect for relocation.
+- Normal grip and pull.
+- Turbo grip and pull, mode for rapid munching, and suborbital sapling/weed launching. 
+
+## 2. Hardware & Software
+- [ ] **Hardware List**: 
+  - See [BOM.xlsx](https://github.com/aaronse/weed-puller/BOM.xlsx) for full common hardware list, or markdown format [BOM Hardware](https://github.com/aaronse/weed-puller/bom-hardware.md).
+    - BOM contains full list of all parts I personally tried for various iterations/version.  Recommend picking 2 steppers and drivers you have available already, or, your budget and interest.  
+      - Recommend 2x Nema 17 84oz with 2x TMC2209 for max pulling fun :-)
+  - [ ] Provided info to build either (A) Arduino, or (B) ESP32 based build :
+    - [ ] Option (A), Arduino Controller:
+      - [ ] board, stepper motor(s), gears, sensors, switches, battery, etc.
+    - [ ] Option (B), V1 Engineering JackPot Controller (ESP32, FluidNC): 
+      - [ ] board, stepper motor(s), gears, sensors, switches, battery, etc.
+- [x] **Software List**: CAD/design tools and libraries...
+  - VS Code, Arduino IDE, Platform IO, FluidNC/ESP3D, Fusion 360, OpenSCAD.
+
+### 3. Wiring Diagram
+- [ ] Draw clear schematic (PNG/PDF).
+- [ ] Annotate each connection with a brief caption.
+
+### 4. Code
+- [ ] Fully commented Arduino sketch.
+- [ ] Summary of code behavior.
+- [x] Link to full repository (e.g. GitHub URL).
+  - [https://github.com/aaronse/weed-puller](https://github.com/aaronse/weed-puller)
+
+### 5. 3D Printing Instructions
+_For each STL file:_
+- [ ] **Material** (e.g. PETG)
+- [ ] **Layer height** (e.g. 0.2 mm)
+- [ ] **Infill** (e.g. 20 %)
+- [ ] **Supports** (Yes/No + location)
+
+
+### 6. Assembly Instructions
+- [ ] Step-by-step bullets (e.g. “1. Insert stepper into jaw housing; 2. Route wires through handle; …”).
+- [ ] Alignment or torque tips (e.g. jaw mesh clearance).
+
+### 7. Demo & Usage Instructions
+- [ ] Power-on and mode selection (Pull vs. Release).
+- [ ] Operating tips (e.g. hold at 30° angle, watch for stall-flash).
+- [ ] Safety note (keep fingers clear of gears).
+
+### 8. Additional Notes & Tips
+- [ ] Troubleshooting pointers (e.g. check wiring if it stalls).
+- [ ] Optional enhancements (e.g. add LCD status display).
+
+### 9. Photos & Videos
+- [ ] Finished product: multiple angles.
+- [ ] Wiring close-ups.
+- [ ] In-action demo GIF or short video (pull + relocate cycle).
+
+### 10. Final Packaging & Submission
+- [ ] Populate the `Printable_Arduino_Project_Template.pdf` with your content.
+- [ ] Upload all STLs, code, diagrams, and the filled template to Printables.com.
+- [ ] Ensure safety—no hazardous features.
+- [ ] Submit before **Apr 27, 2025** (use code `PRINTABLES25` if you need parts).
+
+### 11. (Optional) Clout Boosters
+- [ ] Embed your YouTube demo link in the project description.
+- [ ] Share teaser clips on social media with `#PrintablesContest`.
+
+
+
+
+
 
 - Trigger Design
   - https://www.youtube.com/watch?v=H3J8FiLNEtc
@@ -75,3 +159,19 @@ For example, I have a ton of unwanted Maple tree weedlings.
     - [16 in. H x 16 in. W Plastic Pegboard in Black (50 lbs.)](https://www.homedepot.com/p/Everbilt-16-in-H-x-16-in-W-Plastic-Pegboard-in-Black-50-lbs-814450/317815422)
     - Some popular/accessible options...
       ![image|845x892,50%](./img/buy-pegboard.png)
+
+
+## 📄 License
+
+⚠️ This project is for **personal, non-commercial use only**.
+
+🚫 You may not sell, manufacture, or commercially distribute this project or any derivative works.
+
+😏 *Wanna sell it anyway?*  
+Get in touch — am open to licensing deals to help pay for my kids' college fees...
+Contact us at: https://github.com/aaronse/weed-puller/issues
+
+This project is licensed under the [Creative Commons BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) license.
+
+You are free to use and remix for **personal, non-commercial use**.  
+**Commercial use or resale of any parts, models, or derivatives is strictly prohibited.**
