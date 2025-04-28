@@ -8,7 +8,7 @@ Inspired by conversations on V1 Engineering forum, see https://forum.v1e.com/t/h
 
 Built two separate versions, a V1 Engineering Jackpot with FluidNC on ESP32, and, an Arduino Nano 33 IoT version.
 
-Available on [Printables](https://www.printables.com/model/1276001-pet-weed-euthanizer-or-pet-sapling-savior-in-progr), [GitHub](https://github.com/aaronse/weed-puller).
+Available on [Printables](https://www.printables.com/model/1276001-pet-weed-euthanizer-or-pet-sapling-savior-in-progr), [GitHub](https://github.com/aaronse/weed-muncher).
 
 
 This Project was inspired by conversations on V1 Engineering forum, see https://forum.v1e.com/t/how-about-a-m3dpmower/36759  topic for context/details.   
@@ -37,7 +37,7 @@ ASMR video of earlier Iteration #2 tests…
 
 ## 2. Hardware & Software
 - [X] **Hardware List**: 
-  - See [BOM.xlsx](https://github.com/aaronse/weed-puller/BOM.xlsx) for full common hardware list, or markdown format [BOM Hardware](https://github.com/aaronse/weed-puller/bom-hardware.md).
+  - See [BOM.xlsx](https://github.com/aaronse/weed-muncher/BOM.xlsx) for full common hardware list, or markdown format [BOM Hardware](https://github.com/aaronse/weed-muncher/bom-hardware.md).
     - BOM contains full list of all parts I personally tried for various iterations/version.  Recommend picking 2 steppers and drivers you have available already, or, your budget and interest.  
       - Recommend 2x Nema 17 84oz with 2x TMC2209 for max pulling fun :-)
       - **Power**:
@@ -91,7 +91,7 @@ ASMR video of earlier Iteration #2 tests…
 
   - Pressing Grind lets you pull weeds at a custom speed; Turbo gives you max power instantly. If the motors detect a stall, the system shuts them down and flashes a red warning until you're ready to go again. It also keeps an eye on weed distance with an ultrasonic sensor and shows real-time status over USB for easy debugging.
 
-- [x] Full code repository at [https://github.com/aaronse/weed-puller](https://github.com/aaronse/weed-puller)
+- [x] Full code repository at [https://github.com/aaronse/weed-muncher](https://github.com/aaronse/weed-muncher)
 
 
 ### 5. 3D Printing Instructions
@@ -228,6 +228,6 @@ As long as you:
 - ✅ Share under the same license
 
 😏 *Interested in selling parts or kits?*  
-Am open to commercial licensing.  Any help paying for my kids' college fees is appreciated, cheers!  Contact via https://github.com/aaronse/weed-puller/issues
+Am open to commercial licensing.  Any help paying for my kids' college fees is appreciated, cheers!  Contact via https://github.com/aaronse/weed-muncher/issues
 
 **Commercial use or resale of any parts, models, or derivatives is strictly prohibited.**
