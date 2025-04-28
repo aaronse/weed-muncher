@@ -36,19 +36,48 @@ ASMR video of earlier Iteration #2 tests…
 - Turbo grip and pull, mode for rapid munching, and suborbital sapling/weed launching. 
 
 ## 2. Hardware & Software
+- [x] **Software List**: CAD/design tools and libraries...
+  - [VS Code](https://code.visualstudio.com/), [Arduino IDE](https://www.arduino.cc/en/software/), [PlatformIO](https://platformio.org/), [FluidNC](http://wiki.fluidnc.com/en/home)/[ESP3D](https://github.com/luc-github/ESP3D), [Fusion 360](https://www.autodesk.com/products/fusion-360), [OpenSCAD](https://openscad.org/), [Fritzing](https://fritzing.org/).
+
 - [X] **Hardware List**: 
-  - See [BOM.xlsx](https://github.com/aaronse/weed-muncher/BOM.xlsx) for full common hardware list, or markdown format [BOM Hardware](https://github.com/aaronse/weed-muncher/bom-hardware.md).
-    - BOM contains full list of all parts I personally tried for various iterations/version.  Recommend picking 2 steppers and drivers you have available already, or, your budget and interest.  
+    - BOM contains latest set of parts that are working for me.  I tried many more components than what are listed here.  Let me know if you want to see the full list, only shared subset here to keep instructions straight forward.   
       - Recommend 2x Nema 17 84oz with 2x TMC2209 for max pulling fun :-)
       - **Power**:
         - [AI chat about Buck convertor options](https://chatgpt.com/share/680bc146-582c-800b-8d66-930ea82643ff)
   - [X] Provided info to build either (A) Arduino, or (B) V1 Engineering Fluid NC ESP32 based build :
     - [X] Option (A), Arduino Controller:
-      - [X] board, stepper motor(s), gears, sensors, switches, battery, etc.
+      - https://store.arduino.cc/products/arduino-nano-33-iot-with-headers
     - [X] Option (B), V1 Engineering JackPot Controller (ESP32, FluidNC): 
-      - [ ] board, stepper motor(s), gears, sensors, switches, battery, etc.
-- [x] **Software List**: CAD/design tools and libraries...
-  - [VS Code](https://code.visualstudio.com/), [Arduino IDE](https://www.arduino.cc/en/software/), [PlatformIO](https://platformio.org/), [FluidNC](http://wiki.fluidnc.com/en/home)/[ESP3D](https://github.com/luc-github/ESP3D), [Fusion 360](https://www.autodesk.com/products/fusion-360), [OpenSCAD](https://openscad.org/), [Fritzing](https://fritzing.org/).
+      - https://www.v1e.com/products/jackpot-cnc-controller
+    
+## BOM
+
+|   Total Price | Description                                                                                                                                                        | Comments/DataSheet/Specs                                                            | Link                                 |
+|--------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------|:-------------------------------------|
+|         27    | Arduino Nano 33 IoT with Headers [ABX00032]                                                                                                                        | - https://store.arduino.cc/products/arduino-nano-33-iot-with-headers                | https://www.amazon.com/dp/B07WPFQZQ1 |
+|               |                                                                                                                                                                    | - https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/697/ABX00032_Web.pdf |                                      |
+|               |                                                                                                                                                                    | - https://docs.arduino.cc/hardware/nano-33-iot/#tech-specs                          |                                      |
+|               |                                                                                                                                                                    | - https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/697/ABX00032_Web.pdf |                                      |
+|               |                                                                                                                                                                    | - https://docs.arduino.cc/hardware/nano-33-iot/#tech-specs                          |                                      |
+|         28    | STEPPERONLINE 2A 59Ncm 84oz Nema 17 Stepper Motor Bipolar 48mm                                                                                                     |                                                                                     | https://www.amazon.com/dp/B00PNEQKC0 |
+|         12    | Twotrees 1.5A 42Ncm 60oz Nema 17 Stepper Motor, 1m Cable 42BYGH 38MM (17HS4401S)                                                                                   |                                                                                     | https://www.amazon.com/dp/B07Y2SVNGP |
+|         10    | 12pcs 12mm Mini Latching Push Button Switch ON-Off AC 250V/1.5A 125V/3A                                                                                            |                                                                                     | https://www.amazon.com/dp/B0CGTXMLKL |
+|         10    | 5pcs HiLetgo A4988 Stepstick Stepper Motor Driver                                                                                                                  |                                                                                     | https://www.amazon.com/dp/B07BND65C8 |
+|          6    | 15pcs 220uF 35V 8x12mm Electrolytic Capacitor 220 UF MFD 35 Volt 0.32x0.47in Aluminum Capacitors                                                                   |                                                                                     | https://www.amazon.com/dp/B0CMQCG3M8 |
+|          8    | 15pcs 100uF 25V 6x12mm Electrolytic Capacitor 100 UF MFD 25 Volt 0.24x0.47in Aluminum Capacitors                                                                   | 100uF per stepper will work, but 25V is close to 20V Battery.  Use 35V instead…     | https://www.amazon.com/dp/B0CMQ9SLCZ |
+|         11    | 2pcs 12V-36V DC Voltage Protection Module Digital Low Voltage Protector Disconnect Switch Over Discharge Protection Module                                         |                                                                                     | https://www.amazon.com/dp/B07QNXM4LS |
+|         16    | 2pcs Switched, Fused Power Adapter for Dewalt 20V Battery                                                                                                          |                                                                                     | https://www.amazon.com/dp/B0CRK9CN4D |
+|         15    | 25pcs Wago 2 Port (10) 3 Port (10) 5 Port (5) 221 Splicing Connector, Lever-Nut Assortment Pocket Pack for All Wire 12-24 AWG                                      |                                                                                     | https://www.amazon.com/dp/B07NKSHVF6 |
+|         21    | 28pcs WAGO 221 Lever Nuts, Assortment with Case, Includes 221-2401, 221-412, 221-413, 221-415                                                                      |                                                                                     | https://www.amazon.com/dp/B0CJ5QF3VX |
+|         20    | 50pcs Wago Connectors (222-413 or 221-413)                                                                                                                         |                                                                                     | https://www.amazon.com/dp/B07W7W91FX |
+|          9    | 6pcs ELEGOO Half Breadboard Kit (400 Points, 2 pairs of power rails)                                                                                               |                                                                                     | https://www.amazon.com/dp/B0CYPVMK9J |
+|         10    | 630pcs BOJACK 0-to-1M Ohm 1% 1/4W (17 diff values) Metal Film Resistor Kit                                                                                         |                                                                                     | https://www.amazon.com/dp/B07QXP4KVZ |
+|         13    | 5pcs DROK 5v Step Down, DC 4.5-24V to 5V 3A                                                                                                                        |                                                                                     | https://www.amazon.com/dp/B0758ZTS61 |
+|         12.55 | 6pcs eBoot Mini MP1584EN DC-DC Buck Converter Adjustable Power Supply Module 24V to 12V 9V 5V 3V                                                                   |                                                                                     | https://www.amazon.com/dp/B01MQGMOKI |
+|         10    | DROK Buck Converter 12v to 5v, 5A USB Voltage Regulator DC 9V-36V Step Down to DC 5V-5.3V 5.2V 3.5-6A Volt Transformer Power Supply Module for Phone Fast Charging |                                                                                     | https://www.amazon.com/dp/B01NALDSJ0 |
+|         15    | DROK LCD Screen DC Buck Converter Adjustable Voltage Regulator 12V 6V-32V to 1.5-32V 5A, LCD Screen Step Down Converter with USB Port and Protective Case          |                                                                                     | https://www.amazon.com/dp/B07JZ2GQJF |
+
+
 
 ### 3. Wiring Diagram
 - [X] Draw clear schematic (PNG/PDF).
@@ -101,6 +130,12 @@ _For each STL file:_
 - [ ] **Infill** (e.g. 20 %)
 - [ ] **Supports** (Yes/No + location)
 
+
+|   Qty | File Name                    | Material   | Layer Height   | Infill   | Support   | Print Settings                       | Purpose/Comment                       |
+|------:|:-----------------------------|:-----------|:---------------|:---------|:----------|:-------------------------------------|:--------------------------------------|
+|     1 | chasis.stl                   | PETG       | 0.32mm         | 40%      | No        | 0.6mm noz, 3 walls, 3 top/bot layers | Mount grinder assembly to pole mounts |
+|     1 | grinder-tire-tapered.stl     | HS TPU     | 0.32mm         |          | No        |                                      |                                       |
+|     1 | grinder-tire-tapered-mir.stl | HS TPU     | 0.32mm         |          | No        |                                      |                                       |
 
 ### 6. Assembly Instructions
 - [ ] Step-by-step bullets (e.g. “1. Insert stepper into jaw housing; 2. Route wires through handle; …”).
