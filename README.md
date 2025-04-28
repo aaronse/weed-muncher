@@ -19,7 +19,8 @@ ASMR video of earlier Iteration #2 tests…
 
 
 ### WHY?
-- I hate weeding, and avoid chemicals, plus I'd like to relocate otherwise unwanted saplings to areas needing reforesting, or, yards of people that like/deserve weeds 😉.  
+- I hate weeding, and avoid chemicals, plus I'd like to relocate otherwise unwanted saplings to areas needing reforesting, or, yards of people that like/deserve weeds 😉.
+- Best selling Weeders are unable to grip smaller weeds/saplings like the ton of Maple tree ones that drove me to this. 
 - This is Phase 1 of having IOT+AI powered machines to do my bidding, before they make me do theirs.
  
 ### WHAT's SPECIAL?
@@ -111,18 +112,25 @@ ASMR video of earlier Iteration #2 tests…
 
 
 ### 5. 3D Printing Instructions
-_For each STL file:_
-- [ ] **Material** (e.g. PETG)
-- [ ] **Layer height** (e.g. 0.2 mm)
-- [ ] **Infill** (e.g. 20 %)
-- [ ] **Supports** (Yes/No + location)
 
 
-|   Qty | File Name                    | Material   | Layer Height   | Infill   | Support   | Print Settings                       | Purpose/Comment                       |
-|------:|:-----------------------------|:-----------|:---------------|:---------|:----------|:-------------------------------------|:--------------------------------------|
-|     1 | chasis.stl                   | PETG       | 0.32mm         | 40%      | No        | 0.6mm noz, 3 walls, 3 top/bot layers | Mount grinder assembly to pole mounts |
-|     1 | grinder-tire-tapered.stl     | HS TPU     | 0.32mm         |          | No        |                                      |                                       |
-|     1 | grinder-tire-tapered-mir.stl | HS TPU     | 0.32mm         |          | No        |                                      |                                       |
+| Qty    | File Name                            | Material   | Layer Height   | Infill   | Support   | Print Settings                       | Purpose/Comment                                                                                                                                                               |
+|:-------|:-------------------------------------|:-----------|:---------------|:---------|:----------|:-------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1      | chasis.stl                           | PETG       | 0.32mm         | 40%      | No        | 0.6mm noz, 3 walls, 3 top/bot layers | Mount grinder assembly to pole mounts                                                                                                                                         |
+| 1      | grinder-tire-tapered.stl             | HS TPU     | 0.32mm         | 0%       | No        | 0.6mm noz, 1 wall, 1 top/bot layer   | Tapered double helical grip 'n pull                                                                                                                                           |
+| 1      | grinder-tire-tapered-mir.stl         | HS TPU     | 0.32mm         | 0%       | No        | 0.6mm noz, 1 wall, 1 top/bot layer   | Mirrored evil twin for meshing.                                                                                                                                               |
+| 2      | grinder-core.stl                     | PETG       | 0.32mm         | 40%      | No        | 0.6mm noz, 3 walls, 3 top/bot layers | Based on metal 2020 right angle brackets, but customized for this build                                                                                                       |
+| 1      | grinder-flex-mount.stl               | PETG       | 0.32mm         | 40%      | No        | 0.6mm noz, 3 walls, 3 top/bot layers | Plate to mount Steppers motors with integrated Linear spring compliant mechanism.                                                                                             |
+| 1      | guard-grip-gt2.stl                   | PETG       | 0.32mm         | 40%      | No        | 0.6mm noz, 3 walls, 3 top/bot layers | Holds brackets, and grips dust/debris guard to protect steppers.                                                                                                              |
+| 2      | 2020-bracket-right-angle.stl         |            | 0.32mm         | 40%      | No        | 0.6mm noz, 3 walls, 3 top/bot layers | Mount pole to grinder assembly.                                                                                                                                               |
+| 2      | 2020-cap.stl                         | HS TPU     | 0.32mm         | 20%      | No        | 0.6mm noz, 3 walls, 3 top/bot layers | End CAPs to make 2020 less stabby.                                                                                                                                            |
+| 0 or 1 | 2020-mount-breadboard-half.stl       | PETG       | 0.32mm         | 20%      | No        | 0.6mm noz, 3 walls, 3 top/bot layers | ONLY Arduino build.  Mount for half breadboards, includes logo upside down, trick print.  Consider the separate _base_ and _frame_ versions if your printer bed isn't sticky. |
+| 0 or 1 | 2020-mount-breadboard-half-base.stl  | PETG       | 0.32mm         | 20%      | No        | 0.6mm noz, 3 walls, 3 top/bot layers | ONLY Arduino build, maybe…  This "base" and "frame" are for the meek not comfortable printing engraved logo upside down.                                                      |
+| 0 or 1 | 2020-mount-breadboard-half-frame.stl | PETG       | 0.32mm         | 20%      | No        | 0.6mm noz, 3 walls, 3 top/bot layers | ONLY Arduino build, maybe…  See above                                                                                                                                         |
+| 0 or 2 | 2020-mount-tmc2209.stl               | TPU        | 0.32mm         | 20%      | No        | 0.6mm noz, 3 walls, 3 top/bot layers | ONLY Arduino build.  Temporary mounts for TMC2209 until I figure out better solution.  They don't fit in breadboards.                                                         |
+| 0 or 1 | 2020-mount-jackpot.stl               | PETG       | 0.32mm         | 20%      | No        | 0.6mm noz, 3 walls, 3 top/bot layers | ONLY for V1 Engineering Jackpot build                                                                                                                                         |
+| 0 or 1 | trigger-lefty.stl                    | PETG       | 0.32mm         | 40%      | No        | 0.6mm noz, 3 walls, 3 top/bot layers | ONLY if User is Left handed                                                                                                                                                   |
+| 0 or 1 | trigger-righty.stl                   | PETG       | 0.32mm         | 40%      | No        | 0.6mm noz, 3 walls, 3 top/bot layers | ONLY if User is Right handed                                                                                                                                                  |
 
 ### 6. Assembly Instructions
 - [ ] Step-by-step bullets (e.g. “1. Insert stepper into jaw housing; 2. Route wires through handle; …”).
@@ -173,10 +181,6 @@ https://installer.fluidnc.com/
   - IPC via WebSockets/TCP http://wiki.fluidnc.com/en/support/interface/websockets
   - 
 
-## WHAT / WHY...
-Semi-automated Weed Puller intended to be used for small broad leaf weed situations where GramPa's Weeder (and similar) are unable to grip.
-
-For example, I have a ton of unwanted Maple tree weedlings.
 
 ## TODO/TASKS
 - CAD Design edits
@@ -225,7 +229,7 @@ For example, I have a ton of unwanted Maple tree weedlings.
       - Best Selling Corner Braces https://www.homedepot.com/b/Building-Materials-Building-Hardware-Corner-Braces/N-5yc1vZc8hr 
       - https://www.homedepot.com/p/Everbilt-1-in-Steel-Zinc-Plated-Corner-Brace-4-Pack-24590/327599496
 
-## PARTS
+## ALTERNATIVE HARDWARE CONSIDERED
 
 - PegBoard (alternative to CNC/Printed plates).
   - Popular 1" OC, 1/4" holes, Pegboard at HomeDepot:
