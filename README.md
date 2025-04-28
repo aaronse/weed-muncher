@@ -1,18 +1,34 @@
 # Project: Pet Sapling Savior, or, Pet Weed Euthanizer?
 
+
 ## Description
-An Arduino‐powered, Mostly 3D‐printed weeder that grips unwanted plants, gently uproots them, and deposits sapling-worthy seedlings into your chosen grow tray—combining garden cleanup, and with mini reforestation.
+An Arduino or ESP32 powered, Mostly 3D‐Printed Smart Pet Weed Euthanizer/Relocator that grips unwanted plants, gently uproots them.  Use to annihilate, or deposit sapling-worthy seedlings into your chosen grow tray—combining garden cleanup, and with mini reforestation.
+
+Inspired by conversations on V1 Engineering forum, see https://forum.v1e.com/t/how-about-a-m3dpmower/36759  topic for context/details.
+
+Built two separate versions, a V1 Engineering Jackpot with FluidNC on ESP32, and, an Arduino Nano 33 IoT version.
+
+Available on [Printables](https://www.printables.com/model/1276001-pet-weed-euthanizer-or-pet-sapling-savior-in-progr), [GitHub](https://github.com/aaronse/weed-puller).
+
+
+This Project was inspired by conversations on V1 Engineering forum, see https://forum.v1e.com/t/how-about-a-m3dpmower/36759  topic for context/details.   
+
+ASMR video of earlier Iteration #2 tests…
+
+![](https://www.youtube.com/watch?v=_lud7q77Fl4)
+
 
 ### WHY?
 - I hate weeding, and avoid chemicals, plus I'd like to relocate otherwise unwanted saplings to areas needing reforesting, or, yards of people that like/deserve weeds 😉.  
-- I want AI machines to do my bidding, before they make me do theirs.
+- This is Phase 1 of having IOT+AI powered machines to do my bidding, before they make me do theirs.
  
 ### WHAT's SPECIAL?
 - Fast cordless yard fun way to relocate pet saplings, or, euthanize pet weeds.  
 - Design includes many components that can be repurposed for other DIY tools.
-- Today's [Best selling Weeders](https://www.amazon.com/gp/bestsellers/lawn-garden/553934) are either designed for large deep rooted weeds.  They don't help with small weeds.  So today, people need to bend down, or kneel down, to grip and pull out small weeds.  
-- Cutting/trimming weeds is fast for a day...  But, requires multiple cuts over long periods to eventually exhaust weeds.
-- FluidNC controller boards doesn't require code, just upload config via WebUI, and go relocating/hunting...
+- Uses mix of TPU infill/density and [Linear Spring Compliant Mechanisms](https://forum.v1e.com/t/linear-spring-compliant-mechanisms-designing-calculating-force-and-deflection/48891) to simulate pressure exerted by human hands gripping and pulling saplings/weeds without breaking them (well tries too...). 
+- Today's chemical free [Best selling Weeders](https://www.amazon.com/gp/bestsellers/lawn-garden/553934) are designed for either large deep rooted weeds, or, for people to bend and kneed down to grip and pull out small weeds by hand.  There's got to be a better way...  Maybe this DIY tool ?
+- Pulling small saplings/weeds saves time compared to repeatedly cutting/trimming weeds until their root system exhausts and dies.
+- **NO Coding** needed for FluidNC controller board based builds.  Just upload [config.yaml](fluidnc/config.yaml) via Web UI, restart, then go relocating/hunting...
 
 ## Functions
 - Grip, pull and discard, or, collect for relocation.
@@ -20,27 +36,63 @@ An Arduino‐powered, Mostly 3D‐printed weeder that grips unwanted plants, gen
 - Turbo grip and pull, mode for rapid munching, and suborbital sapling/weed launching. 
 
 ## 2. Hardware & Software
-- [ ] **Hardware List**: 
+- [X] **Hardware List**: 
   - See [BOM.xlsx](https://github.com/aaronse/weed-puller/BOM.xlsx) for full common hardware list, or markdown format [BOM Hardware](https://github.com/aaronse/weed-puller/bom-hardware.md).
     - BOM contains full list of all parts I personally tried for various iterations/version.  Recommend picking 2 steppers and drivers you have available already, or, your budget and interest.  
       - Recommend 2x Nema 17 84oz with 2x TMC2209 for max pulling fun :-)
-  - [ ] Provided info to build either (A) Arduino, or (B) ESP32 based build :
-    - [ ] Option (A), Arduino Controller:
-      - [ ] board, stepper motor(s), gears, sensors, switches, battery, etc.
-    - [ ] Option (B), V1 Engineering JackPot Controller (ESP32, FluidNC): 
+      - **Power**:
+        - [AI chat about Buck convertor options](https://chatgpt.com/share/680bc146-582c-800b-8d66-930ea82643ff)
+  - [X] Provided info to build either (A) Arduino, or (B) V1 Engineering Fluid NC ESP32 based build :
+    - [X] Option (A), Arduino Controller:
+      - [X] board, stepper motor(s), gears, sensors, switches, battery, etc.
+    - [X] Option (B), V1 Engineering JackPot Controller (ESP32, FluidNC): 
       - [ ] board, stepper motor(s), gears, sensors, switches, battery, etc.
 - [x] **Software List**: CAD/design tools and libraries...
-  - VS Code, Arduino IDE, Platform IO, FluidNC/ESP3D, Fusion 360, OpenSCAD.
+  - [VS Code](https://code.visualstudio.com/), [Arduino IDE](https://www.arduino.cc/en/software/), [PlatformIO](https://platformio.org/), [FluidNC](http://wiki.fluidnc.com/en/home)/[ESP3D](https://github.com/luc-github/ESP3D), [Fusion 360](https://www.autodesk.com/products/fusion-360), [OpenSCAD](https://openscad.org/), [Fritzing](https://fritzing.org/).
 
 ### 3. Wiring Diagram
-- [ ] Draw clear schematic (PNG/PDF).
-- [ ] Annotate each connection with a brief caption.
+- [X] Draw clear schematic (PNG/PDF).
+- [X] Annotate each connection with a brief caption.
+
+![](./img/breadboard.png)
+
+### Arduino Nano 33 IoT (3.3 V logic)
+
+
+
+| Function                   | Board Pin | Device Pin         | Wire Color |
+|----------------------------|-----------|--------------------|------------|
+| STEP1                      | D3        | STEP               | 🟦 Blue    |
+| DIR1                       | D2        | DIR                | 🟫 Brown   |
+| EN1                        | D5        | EN                 | ⬜ White   |
+| TX1 (to PDN_UART1)         | D7        | TX (with 1kΩ)      | 🟪 Purple  |
+| RX1 (from PDN_UART1)       | D4        | RX                 | 🟪 Purple  |
+| StallGuard1 (DIAG1)        | D6        | DIAG               | 🩶 Gray    |
+| STEP2                      | D18       | STEP               | 🟦 Blue    |
+| DIR2                       | D17       | DIR                | 🟫 Brown   |
+| EN2                        | D20       | EN                 | ⬜ White   |
+| TX2 (to PDN_UART2)         | D16       | TX (with 1kΩ)      | 🟪 Purple  |
+| RX2 (from PDN_UART2)       | D19       | RX                 | 🟪 Purple  |
+| StallGuard2 (DIAG2)        | D21       | DIAG               | 🩶 Gray    |
+| Rotary Encoder CLK         | D14       | CLK                | 🟩 Green   |
+| Rotary Encoder DT          | D15       | DT                 | 🟨 Yellow  |
+| Rotary Encoder SW          | D13       | SW                 | 🟨 Yellow  |
+| Turbo Button               | D8        | Button             | 🟨 Yellow  |
+| Grind Button               | D9        | Button             | 🟨 Yellow  |
+| US Trigger (TRIG)          | D11       | Trigger            | 🟨 Yellow  |
+| US Echo (ECHO)             | D10       | Echo               | 🟩 Green   |
+| NeoPixel Data              | D12       | NeoPixel           | ⬜ White   |
+
 
 ### 4. Code
-- [ ] Fully commented Arduino sketch.
-- [ ] Summary of code behavior.
-- [x] Link to full repository (e.g. GitHub URL).
-  - [https://github.com/aaronse/weed-puller](https://github.com/aaronse/weed-puller)
+- [x] Fully commented Arduino sketch.
+- [x] Summary of code behavior.
+  - The Weed Puller wakes up by setting up its buttons, rotary encoder, and motor drivers for smooth control and stall detection. It reads the Grind and Turbo buttons, the rotary encoder for speed adjustment, and the encoder switch to set the pulling direction.
+
+  - Pressing Grind lets you pull weeds at a custom speed; Turbo gives you max power instantly. If the motors detect a stall, the system shuts them down and flashes a red warning until you're ready to go again. It also keeps an eye on weed distance with an ultrasonic sensor and shows real-time status over USB for easy debugging.
+
+- [x] Full code repository at [https://github.com/aaronse/weed-puller](https://github.com/aaronse/weed-puller)
+
 
 ### 5. 3D Printing Instructions
 _For each STL file:_
