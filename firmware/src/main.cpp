@@ -59,8 +59,8 @@ static const uint32_t TURBO_SPEED_SPS = 4000;
 
 
 //—[ Globals & Objects ]————————————————————————————
-MotorDriver motor1(STEP1_PIN, DIR1_PIN, EN1_PIN);
-MotorDriver motor2(STEP2_PIN, DIR2_PIN, EN2_PIN);
+MotorDriver motor1(STEP1_PIN, DIR1_PIN, EN1_PIN, 0);
+MotorDriver motor2(STEP2_PIN, DIR2_PIN, EN2_PIN, 1);
 DebouncedButton btnGrind(BTN_GRIND);
 DebouncedButton btnTurbo(BTN_TURBO);
 DebouncedButton btnEncoderSW(ENC_SW);
@@ -86,7 +86,9 @@ void setup() {
   Serial.begin(SERIAL_RATE);
   while (!Serial) {}
   Serial.println("🛠️  Weed Muncher Starting...");
-
+  Serial.print("getDriverVersion: ");
+  Serial.print(motor1.getDriverVersion());
+  Serial.println();
   // Set up the onboard LED (Normally pin 13 on Nano 33 IoT)
   pinMode(LED_BUILTIN, OUTPUT);
 
@@ -137,6 +139,11 @@ void loop() {
       motor1.enable(true);
       motor2.enable(true);
 
+      // Optional: scale current from 400mA to 1200mA based on encoderPos
+      uint16_t targetCurrent = map(encoderPos, ENCODER_MIN, ENCODER_MAX, 400, 1400);
+      motor1.setCurrent(targetCurrent);
+      motor2.setCurrent(targetCurrent);
+
       // Set color by mode
       uint32_t color = 0;
       if (currentState == ST_GRIND)   color = statusPixel.Color(0, 255, 0);  // Green
@@ -163,7 +170,10 @@ void loop() {
     Serial.print("  SW=");      Serial.println(btnEncoderSW.isPressed());
   }
   
-  delay(1); // Let the MCU breathe; saves power and reduces noise
+  // Let the MCU breathe; saves power and reduces noise
+  if (currentState == ST_IDLE) {
+    delay(50);  // Sleep longer in idle to reduce power (adjust as needed)
+  }
 }
 
 
@@ -198,13 +208,9 @@ void stepMotors() {
 
   // 1) decide target speed in steps/sec
   uint32_t speedSps;
-  if (currentState == ST_TURBO) {
-    speedSps = TURBO_SPEED_SPS;
-  } else {
-    // forward or reverse
-    speedSps = map(encoderPos, ENCODER_MIN, ENCODER_MAX, 0, MAX_SPEED_SPS);
-  }
-
+  uint32_t baseMax = (currentState == ST_TURBO) ? TURBO_SPEED_SPS : MAX_SPEED_SPS;
+  speedSps = map(encoderPos, ENCODER_MIN, ENCODER_MAX, 0, baseMax);
+  
   // 2) skip stepping if zero
   if (speedSps == 0) return;
 
