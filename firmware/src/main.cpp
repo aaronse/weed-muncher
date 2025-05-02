@@ -6,7 +6,7 @@
 #include <TMCStepper.h>   // if you use USE_TMC2209
 #include <NewPing.h>      // if using sonar
 #include <Adafruit_NeoPixel.h>
-
+#include "Logger.h"
 
 //—[ Configuration ]————————————————————————————————————
 #define R_SENSE      0.11f    // Sense resistor on your TMC2209 carrier
@@ -84,12 +84,12 @@ const char* stateName(State s);
 
 //—[ Setup ]—————————————————————————————————————————
 void setup() {  
-  Serial.begin(SERIAL_RATE);
-  while (!Serial) {}
-  Serial.println("🛠️  Weed Muncher Starting...");
-  Serial.print("getDriverVersion: ");
-  Serial.print(motor1.getDriverVersion());
-  Serial.println();
+  initLogger(115200);  // Pass baud rate explicitly
+  debugln("🛠️  Weed Muncher Starting...");
+  debug("getDriverVersion: ");
+  debugln(motor1.getDriverVersion());
+  
+
   // Set up the onboard LED (Normally pin 13 on Nano 33 IoT)
   pinMode(LED_BUILTIN, OUTPUT);
 
@@ -163,12 +163,12 @@ void loop() {
   // 5) periodic status report
   if (millis() - lastReportMs >= REPORT_MS) {
     lastReportMs = millis();
-    Serial.print("State="); Serial.print(stateName(currentState));
-    Serial.print("  EncoderPos="); Serial.print(encoderPos);
-    Serial.print("  Dist="); Serial.print(usDistCm); Serial.print("cm");
-    Serial.print("  Grind=");   Serial.print(btnGrind.isPressed());
-    Serial.print("  Turbo=");   Serial.print(btnTurbo.isPressed());
-    Serial.print("  SW=");      Serial.println(btnEncoderSW.isPressed());
+    debug("State="); debug(stateName(currentState));
+    debug("  EncoderPos="); debug(encoderPos);
+    debug("  Dist="); debug(usDistCm); debug("cm");
+    debug("  Grind=");   debug(btnGrind.isPressed());
+    debug("  Turbo=");   debug(btnTurbo.isPressed());
+    debug("  SW=");      debugln(btnEncoderSW.isPressed());
   }
   
   // Let the MCU breathe; saves power and reduces noise
@@ -178,7 +178,7 @@ void loop() {
   }
 }
 
-
+// TODO:P1 Optional: Dynamic Sensitivity (e.g., Fast Spin = Bigger Steps)
 void handleEncoder() {
   bool encA = digitalRead(ENC_CLK);
   bool encB = digitalRead(ENC_DT);
