@@ -44,7 +44,8 @@
 
 #define ENCODER_MIN   0
 #define ENCODER_MAX   100
-#define ENCODER_STEP  1
+//#define ENCODER_STEP  1 // 0-100% in 720deg rotation, fine tuning - thumb/finger fatigue 
+#define ENCODER_STEP  4   // 0-100% in 180deg rotation, coarse tuning - responsive 
 
 volatile int encoderPos = 50; // Start at middle speed
 int lastEncoded = 0;
@@ -172,7 +173,8 @@ void loop() {
   
   // Let the MCU breathe; saves power and reduces noise
   if (currentState == ST_IDLE) {
-    delay(50);  // Sleep longer in idle to reduce power (adjust as needed)
+    // TODO:P1 Power Saving, dynamically increase delay to 50ms when no recent interaction.  Goal is to sleep longer in idle to reduce power
+    delay(5);  
   }
 }
 
