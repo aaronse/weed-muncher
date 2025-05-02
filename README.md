@@ -17,6 +17,22 @@ ASMR video of earlier Iteration #2 tests…
 
 ![](https://www.youtube.com/watch?v=_lud7q77Fl4)
 
+<table><tr>
+<td>
+
+![](img/irl-v0.4-raw.jpg)
+
+</td>
+<td>
+
+![](img/irl-v0.4-close.jpg)
+</td>
+<td>
+
+![](img/irl-v0.4-covered.jpg)
+
+</td>
+</tr></table>
 
 ### WHY?
 - I hate weeding, and avoid chemicals, plus I'd like to relocate otherwise unwanted saplings to areas needing reforesting, or, yards of people that like/deserve weeds 😉.
