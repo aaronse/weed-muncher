@@ -5,31 +5,53 @@
 #include "DebouncedButton.h"
 #include <TMCStepper.h>   // if you use USE_TMC2209
 #include <NewPing.h>      // if using sonar
+#include <Adafruit_NeoPixel.h>
+
 
 //—[ Configuration ]————————————————————————————————————
 #define R_SENSE      0.11f    // Sense resistor on your TMC2209 carrier
 #define DRIVER_ADDR  0        // TMC2209 UART address (usually 0 if only one)
 
-#define STEP1_PIN    2
-#define DIR1_PIN     3
-#define EN1_PIN      4
-#define STEP2_PIN    5
-#define DIR2_PIN     6
-#define EN2_PIN      7
+#define STEP1_PIN    3
+#define DIR1_PIN     2
+#define EN1_PIN      5
 
-#define BTN_GRIND    8
-#define BTN_REVERSE  9
-#define BTN_TURBO    10
-#define POT_SPEED    A0
+#define STEP2_PIN    18
+#define DIR2_PIN     17
+#define EN2_PIN      20
+
+#define BTN_GRIND    9
+#define BTN_TURBO    8
+#define ENC_SW       13
+#define ENC_CLK      14
+#define ENC_DT       15
+
+#define DIAG1_PIN    6
+#define DIAG2_PIN    21
 
 #define US_TRIG_PIN  11
-#define US_ECHO_PIN  12
+#define US_ECHO_PIN  10
+#define NEOPIXEL_PIN 12
+
+
+
 #define US_MAX_CM    200U
 #define US_INTERVAL  100U   // ms between pings
 
 #define DEBOUNCE_MS  50U    // button debounce
 #define SERIAL_RATE  115200
 #define REPORT_MS    1000U // status report interval
+
+#define ENCODER_MIN   0
+#define ENCODER_MAX   100
+#define ENCODER_STEP  1
+
+volatile int encoderPos = 50; // Start at middle speed
+int lastEncoded = 0;
+bool lastEncA = HIGH;
+
+#define NUM_PIXELS 1
+Adafruit_NeoPixel statusPixel(NUM_PIXELS, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
 // map analog→steps-per-second
 static const uint32_t MAX_SPEED_SPS   = 2000;
@@ -39,7 +61,9 @@ static const uint32_t TURBO_SPEED_SPS = 4000;
 //—[ Globals & Objects ]————————————————————————————
 MotorDriver motor1(STEP1_PIN, DIR1_PIN, EN1_PIN);
 MotorDriver motor2(STEP2_PIN, DIR2_PIN, EN2_PIN);
-DebouncedButton btnGrind(BTN_GRIND), btnReverse(BTN_REVERSE), btnTurbo(BTN_TURBO);
+DebouncedButton btnGrind(BTN_GRIND);
+DebouncedButton btnTurbo(BTN_TURBO);
+DebouncedButton btnEncoderSW(ENC_SW);
 NewPing sonar(US_TRIG_PIN, US_ECHO_PIN, US_MAX_CM);
 
 enum State { ST_IDLE=0, ST_GRIND, ST_REVERSE, ST_TURBO };
@@ -51,6 +75,7 @@ uint16_t usDistCm     = 0;
 
 
 //—[ Forward Declarations ]—————————————————————————————————————————
+void handleEncoder();
 void updateUltrasound();
 void stepMotors();
 const char* stateName(State s);
@@ -62,44 +87,66 @@ void setup() {
   while (!Serial) {}
   Serial.println("🛠️  Weed Muncher Starting...");
 
-  // Set up the onboard LED (pin 13 on Nano 33 IoT)
+  // Set up the onboard LED (Normally pin 13 on Nano 33 IoT)
   pinMode(LED_BUILTIN, OUTPUT);
 
   motor1.begin();
   motor2.begin();
   btnGrind.begin();
-  btnReverse.begin();
   btnTurbo.begin();
+  btnEncoderSW.begin();
+  pinMode(ENC_CLK, INPUT_PULLUP);
+  pinMode(ENC_DT, INPUT_PULLUP);
+  pinMode(DIAG1_PIN, INPUT);
+  pinMode(DIAG2_PIN, INPUT);
+
+  // NeoPixel init
+  statusPixel.begin();
+  statusPixel.setBrightness(32);
+  statusPixel.show();  // turn off
 }
 
 
 //—[ Main Loop ]———————————————————————————————————
 void loop() {
+  handleEncoder();
+
   // 1) update inputs
   btnGrind.update();
-  btnReverse.update();
+  btnEncoderSW.update();
   btnTurbo.update();
   updateUltrasound();
 
   // 2) determine new state
   State newState = ST_IDLE;
-  if      (btnTurbo.isPressed())   newState = ST_TURBO;
-  else if (btnGrind.isPressed())   newState = ST_GRIND;
-  else if (btnReverse.isPressed()) newState = ST_REVERSE;
-
+  if (btnGrind.isPressed() && btnTurbo.isPressed()) newState = ST_REVERSE;
+  else if (btnTurbo.isPressed())                    newState = ST_TURBO;
+  else if (btnGrind.isPressed())                    newState = ST_GRIND;
+  
   // 3) on state change, (re)configure motors
   if (newState != currentState) {
     currentState = newState;
     if (currentState == ST_IDLE) {
       motor1.enable(false);
       motor2.enable(false);
+      statusPixel.setPixelColor(0, statusPixel.Color(0, 0, 0));  // off
     } else {
       bool forward = (currentState != ST_REVERSE);
       motor1.setDirection(forward);
       motor2.setDirection(!forward);
       motor1.enable(true);
       motor2.enable(true);
+
+      // Set color by mode
+      uint32_t color = 0;
+      if (currentState == ST_GRIND)   color = statusPixel.Color(0, 255, 0);  // Green
+      if (currentState == ST_TURBO)   color = statusPixel.Color(255, 255, 0);  // Yellow
+      if (currentState == ST_REVERSE) color = statusPixel.Color(0, 0, 255);  // Blue
+    
+      statusPixel.setPixelColor(0, color);
     }
+
+    statusPixel.show();
   }
 
   // 4) step if needed
@@ -109,13 +156,30 @@ void loop() {
   if (millis() - lastReportMs >= REPORT_MS) {
     lastReportMs = millis();
     Serial.print("State="); Serial.print(stateName(currentState));
-    Serial.print("  SpeedPot="); Serial.print(map(analogRead(POT_SPEED),0,4095,0,100)); Serial.print("%");
+    Serial.print("  EncoderPos="); Serial.print(encoderPos);
     Serial.print("  Dist="); Serial.print(usDistCm); Serial.print("cm");
     Serial.print("  Grind=");   Serial.print(btnGrind.isPressed());
-    Serial.print("  Rev=");     Serial.print(btnReverse.isPressed());
-    Serial.print("  Turbo=");   Serial.println(btnTurbo.isPressed());
+    Serial.print("  Turbo=");   Serial.print(btnTurbo.isPressed());
+    Serial.print("  SW=");      Serial.println(btnEncoderSW.isPressed());
+  }
+  
+  delay(1); // Let the MCU breathe; saves power and reduces noise
+}
+
+
+void handleEncoder() {
+  bool encA = digitalRead(ENC_CLK);
+  bool encB = digitalRead(ENC_DT);
+
+  // Only act on changes to A (rising/falling)
+  if (encA != lastEncA) {
+    lastEncA = encA;
+    if (encA == encB) encoderPos += ENCODER_STEP;  // Clockwise
+    else              encoderPos -= ENCODER_STEP;  // Counter-clockwise
+    encoderPos = constrain(encoderPos, ENCODER_MIN, ENCODER_MAX);
   }
 }
+
 
 //—[ State → Name ]——————————————————————————————
 const char* stateName(State s) {
@@ -137,8 +201,8 @@ void stepMotors() {
   if (currentState == ST_TURBO) {
     speedSps = TURBO_SPEED_SPS;
   } else {
-    // forward or reverse both use the pot
-    speedSps = map(analogRead(POT_SPEED), 0, 4095, 0, MAX_SPEED_SPS);
+    // forward or reverse
+    speedSps = map(encoderPos, ENCODER_MIN, ENCODER_MAX, 0, MAX_SPEED_SPS);
   }
 
   // 2) skip stepping if zero
