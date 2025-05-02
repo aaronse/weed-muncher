@@ -8,7 +8,7 @@ Inspired by conversations on V1 Engineering forum, see https://forum.v1e.com/t/h
 
 Built two separate versions, a V1 Engineering Jackpot with FluidNC on ESP32, and, an Arduino Nano 33 IoT version.
 
-Available on [Printables](https://www.printables.com/model/1276001-pet-weed-euthanizer-or-pet-sapling-savior-in-progr), [GitHub](https://github.com/aaronse/weed-muncher).
+.STL files available on [Printables](https://www.printables.com/model/1276001-pet-weed-euthanizer-or-pet-sapling-savior-in-progr)
 
 
 This Project was inspired by conversations on V1 Engineering forum, see https://forum.v1e.com/t/how-about-a-m3dpmower/36759  topic for context/details.   
@@ -165,18 +165,6 @@ ASMR video of earlier Iteration #2 tests…
 - [ ] Finished product: multiple angles.
 - [ ] Wiring close-ups.
 - [ ] In-action demo GIF or short video (pull + relocate cycle).
-
-### 10. Final Packaging & Submission
-- [ ] Populate the `Printable_Arduino_Project_Template.pdf` with your content.
-- [ ] Upload all STLs, code, diagrams, and the filled template to Printables.com.
-- [ ] Ensure safety—no hazardous features.
-- [ ] Submit before **Apr 27, 2025** (use code `PRINTABLES25` if you need parts).
-
-### 11. (Optional) Clout Boosters
-- [ ] Embed your YouTube demo link in the project description.
-- [ ] Share teaser clips on social media with `#PrintablesContest`.
-
-
 
 
 
