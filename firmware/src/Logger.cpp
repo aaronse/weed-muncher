@@ -112,3 +112,28 @@ void debugln(bool value) {
   if (debugEnabled) Serial.println(value);
 #endif
 }
+
+void debugln(unsigned long value, int format) {
+  #ifdef ENABLE_DEBUG
+    if (debugEnabled) Serial.println(value, format);
+  #endif
+  }
+  
+  void debugln(long value, int format) {
+  #ifdef ENABLE_DEBUG
+    if (debugEnabled) Serial.println(value, format);
+  #endif
+  }
+  
+  void debugln(unsigned int value, int format) {
+  #ifdef ENABLE_DEBUG
+    if (debugEnabled) Serial.println(value, format);
+  #endif
+  }
+  
+  void debugln(int value, int format) {
+  #ifdef ENABLE_DEBUG
+    if (debugEnabled) Serial.println(value, format);
+  #endif
+  }
+  

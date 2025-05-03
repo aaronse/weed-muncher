@@ -103,6 +103,18 @@ void setup() {
   pinMode(DIAG1_PIN, INPUT);
   pinMode(DIAG2_PIN, INPUT);
 
+  motor1.maximizeTorque();
+  motor2.maximizeTorque();
+
+  debug("Motor1 UART test: "); 
+  debugln(motor1.driver()->test_connection());
+  debug("Motor2 UART test: "); 
+  debugln(motor2.driver()->test_connection());
+
+  motor1.debugDriver("Startup Motor1");
+  motor2.debugDriver("Startup Motor2");
+
+
   // NeoPixel init
   statusPixel.begin();
   statusPixel.setBrightness(32);
@@ -141,9 +153,14 @@ void loop() {
       motor2.enable(true);
 
       // Optional: scale current from 400mA to 1200mA based on encoderPos
-      uint16_t targetCurrent = map(encoderPos, ENCODER_MIN, ENCODER_MAX, 400, 1400);
+      // uint16_t targetCurrent = map(encoderPos, ENCODER_MIN, ENCODER_MAX, 400, 1400); // Weak current at low speed was causing stalling
+      uint16_t targetCurrent = (currentState == ST_TURBO) ? 1400 : 1000;
       motor1.setCurrent(targetCurrent);
       motor2.setCurrent(targetCurrent);
+      
+      motor1.debugDriver("Mode Change Motor1");
+      motor2.debugDriver("Mode Change Motor2");
+      
 
       // Set color by mode
       uint32_t color = 0;

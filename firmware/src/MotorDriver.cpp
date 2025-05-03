@@ -1,5 +1,6 @@
 #include "config.h"
 #include "MotorDriver.h"
+#include "Logger.h"
 
 #ifdef USE_TMC2209
   #define EN_ACTIVE    LOW
@@ -29,6 +30,15 @@
     // Finer steps (e.g. 16+) reduce torque per pulse and increase CPU load.
     // This isn't a precision CNC — it's a torque-hungry weed puller 😎
     _driver.microsteps(2);  // Options: 2 or 4 give good torque + decent smoothness
+
+   // 🔍 UART test
+    int result = _driver.test_connection();
+    if (result == 0) {
+      debugln("✅ TMC2209 UART connection OK");
+    } else {
+      debug("❌ TMC2209 UART connection failed. Error code: ");
+      debugln(result);
+    }    
 
     enable(false);
   }
@@ -79,4 +89,47 @@ void MotorDriver::stepPulse() {
   digitalWrite(_stepPin, HIGH);
   delayMicroseconds(2);
   digitalWrite(_stepPin, LOW);
+}
+
+
+// void MotorDriver::maximizeTorque() {
+//   _driver.begin();
+//   _driver.toff(5);
+//   _driver.rms_current(1400);          // 2.0A peak ≈ 1.41A RMS
+//   _driver.microsteps(2);              // Fewer microsteps = more torque
+//   _driver.en_spreadCycle(true);       // Use spreadCycle instead of stealthChop
+// }
+
+void MotorDriver::maximizeTorque() {
+  _driver.begin();
+  _driver.toff(5);
+  _driver.rms_current(1400);              // ≈ 2.0A peak
+  _driver.microsteps(2);
+  _driver.en_spreadCycle(true);           // Ensure spreadCycle for torque
+  _driver.pwm_autoscale(false);           // Optional: disable stealthChop tuning
+  _driver.pwm_autograd(false);            // Optional: disable auto PWM
+  _driver.I_scale_analog(false);          // Use internal Vref instead of analog pin
+}
+
+
+void MotorDriver::debugDriver(const char* label) {
+  if (label) {
+    debug("[Driver Debug] "); debug(label); debugln(":");
+  }
+
+  uint32_t ihold_irun = _driver.IHOLD_IRUN();
+  uint8_t ihold = ihold_irun & 0x1F;
+  uint8_t irun  = (ihold_irun >> 8) & 0x1F;
+  uint8_t delay = (ihold_irun >> 16) & 0x0F;
+
+  debug("  IHOLD: "); debug(ihold);
+  debug("  IRUN: ");  debug(irun);
+  debug("  IHOLDDELAY: "); debugln(delay);
+
+  debug("  GCONF: "); debugln(_driver.GCONF(), HEX);
+  debug("  IOIN:  "); debugln(_driver.IOIN(), HEX);
+
+  float irun_ratio = irun / 31.0;
+  float approx_rms = irun_ratio * 2000.0; // if using 2.0A motors
+  debug("Estimated RMS: "); debugln(approx_rms);  
 }

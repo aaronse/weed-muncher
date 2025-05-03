@@ -15,6 +15,9 @@ public:
   void setDirection(bool forward);
   void stepPulse();
   uint16_t getDriverVersion();
+  void maximizeTorque();
+  void debugDriver(const char* label = nullptr);
+  TMC2209Stepper* driver() { return &_driver; }
 private:
   uint8_t _stepPin, _dirPin, _enPin;
 #ifdef USE_TMC2209

@@ -27,6 +27,12 @@ void debugln(float value);
 void debug(bool value);
 void debugln(bool value);
 
+void debugln(unsigned long value, int format);
+void debugln(long value, int format);
+void debugln(unsigned int value, int format);
+void debugln(int value, int format);
+
+
 #ifdef ENABLE_DEBUG
   #define DEBUG(msg)    debug(msg)
   #define DEBUGLN(msg)  debugln(msg)
