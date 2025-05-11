@@ -8,6 +8,9 @@
 #include <Adafruit_NeoPixel.h>
 #include "Logger.h"
 
+// For SERCOM pin binding
+#include <wiring_private.h>  
+
 //—[ Configuration ]————————————————————————————————————
 #define R_SENSE      0.11f    // Sense resistor on your TMC2209 carrier
 #define DRIVER_ADDR  0        // TMC2209 UART address (usually 0 if only one)
@@ -33,7 +36,13 @@
 #define US_ECHO_PIN  10
 #define NEOPIXEL_PIN 12
 
+// 🧠 UART1: TMC Stepper 1
+#define TMC1_TX_PIN 7   // D7
+#define TMC1_RX_PIN 4   // D4
 
+// 🧠 UART2: TMC Stepper 2
+#define TMC2_TX_PIN 16  // D16
+#define TMC2_RX_PIN 19  // D19
 
 #define US_MAX_CM    200U
 #define US_INTERVAL  100U   // ms between pings
