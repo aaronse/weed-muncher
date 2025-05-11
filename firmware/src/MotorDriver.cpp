@@ -11,16 +11,19 @@
   # define R_SENSE 0.11f
   #endif
 
-  MotorDriver::MotorDriver(uint8_t st, uint8_t di, uint8_t en, uint8_t driverNum)
-    : _stepPin(st), _dirPin(di), _enPin(en),
-      _driver(&TMC_SERIAL, R_SENSE, driverNum)
+  // TODO:P0 Should reset and/or periodically re-evaluate _isConnected
+
+  MotorDriver::MotorDriver(uint8_t st, uint8_t di, uint8_t en, MotorCommChannel* comm, uint8_t driverAddr)
+  : _stepPin(st), _dirPin(di), _enPin(en),
+    _comm(comm),
+    _driver(comm->getStream(), R_SENSE, driverAddr)
   {}
 
   void MotorDriver::begin() {
     pinMode(_stepPin, OUTPUT);
     pinMode(_dirPin,  OUTPUT);
     pinMode(_enPin,   OUTPUT);
-    TMC_SERIAL.begin(115200);
+    
     _driver.begin();
     _driver.toff(5);
     _driver.rms_current(800);
@@ -31,20 +34,23 @@
     // This isn't a precision CNC — it's a torque-hungry weed puller 😎
     _driver.microsteps(2);  // Options: 2 or 4 give good torque + decent smoothness
 
-   // 🔍 UART test
+    // 🔍 UART test
     int result = _driver.test_connection();
-    if (result == 0) {
-      debugln("✅ TMC2209 UART connection OK");
+    _isConnected = (result == 0);
+    debug("["); debug(_comm->getName()); debug("] ");
+    if (_isConnected) {
+      debugln("✅ UART connection OK");
     } else {
-      debug("❌ TMC2209 UART connection failed. Error code: ");
-      debugln(result);
-    }    
-
+      debug("❌ UART connection FAIL (code: "); debug(result); debugln(")");
+    }
+    
     enable(false);
   }
 
   void MotorDriver::setCurrent(uint16_t mA) {
-    _driver.rms_current(mA);
+    if (_isConnected) {
+      _driver.rms_current(mA);
+    }
   }
 
   uint16_t MotorDriver::getDriverVersion() {
@@ -113,6 +119,15 @@ void MotorDriver::maximizeTorque() {
 
 
 void MotorDriver::debugDriver(const char* label) {
+  if (!_isConnected) {
+    debug("["); 
+    debug(_comm->getName()); 
+    debug(",");
+    debug(label);
+    debugln("] ⚠️ UART unavailable — skipping Driver debug logic.");
+    return;
+  }
+
   if (label) {
     debug("[Driver Debug] "); debug(label); debugln(":");
   }
@@ -125,7 +140,6 @@ void MotorDriver::debugDriver(const char* label) {
   debug("  IHOLD: "); debug(ihold);
   debug("  IRUN: ");  debug(irun);
   debug("  IHOLDDELAY: "); debugln(delay);
-
   debug("  GCONF: "); debugln(_driver.GCONF(), HEX);
   debug("  IOIN:  "); debugln(_driver.IOIN(), HEX);
 

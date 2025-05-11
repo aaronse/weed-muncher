@@ -1,6 +1,7 @@
 #define USE_TMC2209
 
 #include <Arduino.h>
+#include "MotorCommChannel.h"
 #include "MotorDriver.h"
 #include "DebouncedButton.h"
 #include <TMCStepper.h>   // if you use USE_TMC2209
@@ -69,8 +70,27 @@ static const uint32_t TURBO_SPEED_SPS = 4000;
 
 
 //—[ Globals & Objects ]————————————————————————————
-MotorDriver motor1(STEP1_PIN, DIR1_PIN, EN1_PIN, 0);
-MotorDriver motor2(STEP2_PIN, DIR2_PIN, EN2_PIN, 1);
+MotorCommChannel comm1(
+  "Stepper1",
+  &sercom5,
+  TMC1_TX_PIN,
+  TMC1_RX_PIN,
+  SERCOM_RX_PAD_3,    // D7 (PA21) is PAD3
+  UART_TX_PAD_0       // D4 (PA08) is PAD0
+);
+
+MotorCommChannel comm2(
+  "Stepper2",
+  &sercom3,
+  TMC2_TX_PIN, 
+  TMC2_RX_PIN,
+  SERCOM_RX_PAD_1,    // D19 (PA23) is PAD1
+  UART_TX_PAD_0       // D16 (PA22) is PAD0
+);
+
+MotorDriver motor1(STEP1_PIN, DIR1_PIN, EN1_PIN, &comm1, 0);
+MotorDriver motor2(STEP2_PIN, DIR2_PIN, EN2_PIN, &comm2, 1);
+
 DebouncedButton btnGrind(BTN_GRIND);
 DebouncedButton btnTurbo(BTN_TURBO);
 DebouncedButton btnEncoderSW(ENC_SW);
@@ -102,8 +122,6 @@ void setup() {
   // Set up the onboard LED (Normally pin 13 on Nano 33 IoT)
   pinMode(LED_BUILTIN, OUTPUT);
 
-  motor1.begin();
-  motor2.begin();
   btnGrind.begin();
   btnTurbo.begin();
   btnEncoderSW.begin();
@@ -112,6 +130,10 @@ void setup() {
   pinMode(DIAG1_PIN, INPUT);
   pinMode(DIAG2_PIN, INPUT);
 
+  comm1.begin();
+  comm2.begin();
+  motor1.begin();
+  motor2.begin();
   motor1.maximizeTorque();
   motor2.maximizeTorque();
 

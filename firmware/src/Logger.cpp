@@ -8,7 +8,7 @@ static bool debugEnabled = false;
 void initLogger(unsigned long baudRate) {
 #ifdef ENABLE_DEBUG
   Serial.begin(baudRate);
-  delay(250); // Briefly allow time for USB to enumerate
+  delay(3000); // Briefly allow time for USB to enumerate
   
   //debugEnabled = Serial; // Only true if host is connected
   // Always true, since time for Serial to establish is unpredictable, and should
