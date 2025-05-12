@@ -28,6 +28,7 @@ public:
   void debugDriver(const char* label = nullptr);
   TMC2209Stepper* driver() { return &_driver; }
   bool isConnected() const { return _isConnected; }
+  bool isConnected(bool autoReconnect);
 private:
   uint8_t _stepPin, _dirPin, _enPin;
   MotorCommChannel* _comm;
@@ -35,4 +36,5 @@ private:
   TMC2209Stepper _driver;
 #endif
   bool _isConnected = false; // Tracks connection status
+  unsigned long _lastConnectionCheck = 0;
 };

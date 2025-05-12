@@ -16,7 +16,7 @@
 #define R_SENSE      0.11f    // Sense resistor on your TMC2209 carrier
 #define DRIVER_ADDR  0        // TMC2209 UART address (usually 0 if only one)
 
-#define STEP1_PIN    3
+#define STEP1_PIN    7 // Was 3 = D3
 #define DIR1_PIN     2
 #define EN1_PIN      5
 
@@ -38,8 +38,8 @@
 #define NEOPIXEL_PIN 12
 
 // 🧠 UART1: TMC Stepper 1
-#define TMC1_TX_PIN 7   // D7
-#define TMC1_RX_PIN 4   // D4
+#define TMC1_TX_PIN 4 // WAS 7 = D7
+#define TMC1_RX_PIN 3 // WAS 4 = D4
 
 // 🧠 UART2: TMC Stepper 2
 #define TMC2_TX_PIN 16  // D16
@@ -72,24 +72,24 @@ static const uint32_t TURBO_SPEED_SPS = 4000;
 //—[ Globals & Objects ]————————————————————————————
 MotorCommChannel comm1(
   "Stepper1",
-  &sercom5,
+  &sercom2,
   TMC1_TX_PIN,
+  UART_TX_PAD_0,    // TX = PAD0
   TMC1_RX_PIN,
-  SERCOM_RX_PAD_3,    // D7 (PA21) is PAD3
-  UART_TX_PAD_0       // D4 (PA08) is PAD0
+  SERCOM_RX_PAD_1   // RX = PAD1
 );
 
 MotorCommChannel comm2(
   "Stepper2",
   &sercom3,
   TMC2_TX_PIN, 
+  UART_TX_PAD_0,      // D16 (PA22) is PAD0
   TMC2_RX_PIN,
-  SERCOM_RX_PAD_1,    // D19 (PA23) is PAD1
-  UART_TX_PAD_0       // D16 (PA22) is PAD0
+  SERCOM_RX_PAD_1     // D19 (PA23) is PAD1
 );
 
 MotorDriver motor1(STEP1_PIN, DIR1_PIN, EN1_PIN, &comm1, 0);
-MotorDriver motor2(STEP2_PIN, DIR2_PIN, EN2_PIN, &comm2, 1);
+MotorDriver motor2(STEP2_PIN, DIR2_PIN, EN2_PIN, &comm2, 0);
 
 DebouncedButton btnGrind(BTN_GRIND);
 DebouncedButton btnTurbo(BTN_TURBO);
@@ -137,10 +137,12 @@ void setup() {
   motor1.maximizeTorque();
   motor2.maximizeTorque();
 
+  delay(100); // Wait for motors to initialize
+
   debug("Motor1 UART test: "); 
   debugln(motor1.driver()->test_connection());
-  debug("Motor2 UART test: "); 
-  debugln(motor2.driver()->test_connection());
+  //debug("Motor2 UART test: "); 
+  //debugln(motor2.driver()->test_connection());
 
   motor1.debugDriver("Startup Motor1");
   motor2.debugDriver("Startup Motor2");
@@ -182,6 +184,9 @@ void loop() {
       motor2.setDirection(!forward);
       motor1.enable(true);
       motor2.enable(true);
+
+      // Wait for motors to stabilize after enabling
+      delay(100); 
 
       // Optional: scale current from 400mA to 1200mA based on encoderPos
       // uint16_t targetCurrent = map(encoderPos, ENCODER_MIN, ENCODER_MAX, 400, 1400); // Weak current at low speed was causing stalling

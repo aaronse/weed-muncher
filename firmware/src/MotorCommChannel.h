@@ -52,9 +52,9 @@ public:
     const char* name,              // Friendly label for debug output
     SERCOM* sercom,                // SERCOM peripheral instance (SERCOM3, etc.)
     uint8_t txPin,                 // GPIO for UART TX
+    SercomUartTXPad txPad,         // Which SERCOM TX PAD (e.g., UART_TX_PAD_0)
     uint8_t rxPin,                 // GPIO for UART RX
-    SercomRXPad rxPad,             // Which SERCOM PAD the RX pin maps to (PAD0–3)
-    SercomUartTXPad txPad          // Which SERCOM TX PAD (e.g., UART_TX_PAD_0)
+    SercomRXPad rxPad              // Which SERCOM PAD the RX pin maps to (PAD0–3)
     );
 
   void begin();                    // Maps pins to UART and starts serial

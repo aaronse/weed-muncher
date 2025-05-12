@@ -5,7 +5,7 @@
 #ifdef USE_TMC2209
   #define EN_ACTIVE    LOW
   #define EN_INACTIVE  HIGH
-  #define TMC_SERIAL   Serial1
+  //#define TMC_SERIAL   Serial1
   // Sense resistor constant must match your board
   #ifndef R_SENSE
   # define R_SENSE 0.11f
@@ -24,6 +24,10 @@
     pinMode(_dirPin,  OUTPUT);
     pinMode(_enPin,   OUTPUT);
     
+    // Allow time for driver to power up
+    enable(true);
+    delay(100); 
+
     _driver.begin();
     _driver.toff(5);
     _driver.rms_current(800);
@@ -48,7 +52,7 @@
   }
 
   void MotorDriver::setCurrent(uint16_t mA) {
-    if (_isConnected) {
+    if (isConnected(true)) {
       _driver.rms_current(mA);
     }
   }
@@ -56,6 +60,31 @@
   uint16_t MotorDriver::getDriverVersion() {
     return 2209;
   }
+
+  bool MotorDriver::isConnected(bool autoReconnect) {
+    unsigned long now = millis();
+  
+    if (autoReconnect && (now - _lastConnectionCheck >= 500)) {
+      _lastConnectionCheck = now;
+  
+      int result = _driver.test_connection();
+      _isConnected = (result == 0);
+  
+      debug("["); 
+      debug(_comm->getName()); 
+      debug("] Re-check UART connection: ");
+      if (_isConnected) {
+        debugln("✅ OK");
+      } else {
+        debug("❌ FAIL (code: "); 
+        debug(result); 
+        debugln(")");
+      }
+    }
+  
+    return _isConnected;
+  }
+  
 
 #else
   // A4988 version stub
